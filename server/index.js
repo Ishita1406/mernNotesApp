@@ -16,8 +16,10 @@ app.use(
     })
 );
 
-app.listen(8080, () => {
-    console.log('Server is running on port 8080');
+let port = 8080;
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
 
 mongoose.connect(process.env.MONGO_URL)
