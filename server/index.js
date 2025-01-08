@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use(
     cors({
-        origin: '*'
+        origin: 'https://mernnotesapp-a1i1.onrender.com'
     })
 );
 
