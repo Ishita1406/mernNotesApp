@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRouter from './routes/user.route.js';
 import noteRouter from './routes/note.route.js';
+import path from 'path';
 
 dotenv.config();
 
@@ -16,7 +17,18 @@ app.use(
     })
 );
 
-let port = 8080;
+const _dirname = path.resolve();
+
+app.use('/server/auth', userRouter);
+
+app.use('/server/note', noteRouter);
+
+app.use(express.static(path.join(_dirname, '/client/dist')));
+app.get('*', (_, res) => {
+    res.sendFile(path.join(_dirname, 'client', 'dist', 'index.html'));
+});
+
+let port = 8000;
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
@@ -29,7 +41,3 @@ mongoose.connect(process.env.MONGO_URL)
     .catch((error) => {
         console.log(error);
     });
-
-app.use('/server/auth', userRouter);
-
-app.use('/server/note', noteRouter);
